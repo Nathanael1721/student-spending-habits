@@ -42,4 +42,13 @@ tr:hover td{background:rgba(56,189,248,.07)}
 .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:12px;font-weight:600}
 .badge.null{background:rgba(148,163,184,.2);color:var(--muted)}
 .badge.sig{background:rgba(52,211,153,.2);color:var(--green)}
+details.explain{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:4px 16px;margin-bottom:16px}
+details.explain summary{cursor:pointer;font-weight:600;color:var(--accent);padding:10px 0;font-size:14px;list-style:none}
+details.explain summary::-webkit-details-marker{display:none}
+details.explain summary::before{content:"▸ ";color:var(--accent)}
+details.explain[open] summary::before{content:"▾ "}
+details.explain ul{margin:4px 0 14px;padding-left:18px;line-height:1.65;font-size:13px;color:var(--text)}
+details.explain li{margin-bottom:7px}
+details.explain code{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-size:12px;color:var(--amber)}
+details.explain b.term{color:var(--accent)}
 @media(max-width:900px){.grid{grid-template-columns:1fr}aside{display:none}}

@@ -123,8 +123,15 @@ function renderOverview(view) {
     ["Avg expenses", fmt(mean(exp))],
     ["Gini (spending)", view.length > 1 ? gini(exp).toFixed(3) : "—"],
   ];
+  const TIP = {
+    "Students": "Number of students in the current filter selection.",
+    "In deficit": "Share of students whose monthly expenses exceed income + financial aid (savings < 0).",
+    "Avg income": "Average monthly income (generic currency units; the dataset has no specified currency).",
+    "Avg expenses": "Average total monthly spending across the 9 expense categories.",
+    "Gini (spending)": "Inequality of spending: 0 = everyone spends the same, 1 = extreme inequality.",
+  };
   document.getElementById("kpis").innerHTML = kpis.map(
-    ([l, v]) => `<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
+    ([l, v]) => `<div class="kpi" title="${TIP[l] || ""}"><div class="v">${v}</div><div class="l">${l} ⓘ</div></div>`).join("");
 
   // data table (all filtered rows)
   const cols = ["age", "gender", "year_in_school", "major", "monthly_income",

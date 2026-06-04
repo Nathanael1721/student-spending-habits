@@ -30,6 +30,24 @@
     <!-- Overview -->
     <section class="panel active" data-tab="overview">
       <div class="kpis" id="kpis"></div>
+      <details class="explain" open>
+        <summary>ℹ️ What do these numbers mean?</summary>
+        <ul>
+          <li><b class="term">In deficit</b> — the share of students whose monthly
+            <i>expenses</i> exceed their monthly <i>resources</i> (income + financial aid),
+            i.e. <code>savings &lt; 0</code>. These students run out of money before the
+            month ends. Here it is <b>70.5%</b> of students.</li>
+          <li><b class="term">Gini (spending)</b> — a measure of <b>inequality</b> of
+            monthly spending across students, borrowed from economics. <code>0</code> =
+            everyone spends exactly the same; <code>1</code> = extreme inequality (one
+            person spends everything). Our value (~0.08) is very low → spending is spread
+            quite evenly, which is expected for a synthetic dataset.</li>
+          <li><b class="term">Currency</b> — the dataset does <b>not</b> specify a currency.
+            All amounts (income, expenses, savings) are <b>generic monetary units</b>
+            (commonly read as US dollars). Only the <i>relative</i> magnitudes matter, not
+            the absolute unit.</li>
+        </ul>
+      </details>
       <div class="card full">
         <button class="btn" id="dl">⬇️ Download filtered data (CSV)</button>
         <div class="tbl-wrap" style="margin-top:10px"><div id="table"></div></div>
@@ -63,6 +81,36 @@
 
     <!-- Prediction -->
     <section class="panel" data-tab="prediction">
+      <details class="explain" open>
+        <summary>ℹ️ How to read this tab — metrics &amp; models</summary>
+        <ul>
+          <li>The task: predict whether a student is <b>in deficit</b>
+            (<code>financial_stress = savings &lt; 0</code>) from their spending, income
+            and demographics. The data is split 75% train / 25% test.</li>
+          <li><b class="term">cv_auc</b> — mean <b>ROC-AUC</b> over 5-fold
+            cross-validation (the data is split into 5 parts and the model is trained/tested
+            5 times). ROC-AUC measures how well the model separates the two classes:
+            <code>1.0</code> = perfect, <code>0.5</code> = random guessing. Averaging over
+            folds makes the estimate robust.</li>
+          <li><b class="term">test_auc</b> — ROC-AUC on the held-out 25% test set the model
+            never saw during training.</li>
+          <li><b class="term">test_acc</b> — <b>accuracy</b> on the test set: the fraction
+            of students whose deficit / no-deficit status was predicted correctly
+            (e.g. <code>0.90</code> = 90% correct).</li>
+        </ul>
+        <ul>
+          <li><b class="term">LogReg</b> (Logistic Regression) — a simple linear model that
+            estimates the probability of deficit; fast and interpretable.</li>
+          <li><b class="term">RandomForest</b> — an ensemble of many decision trees that
+            vote; captures non-linear patterns and provides feature importance.</li>
+          <li><b class="term">GradientBoosting</b> — decision trees built one after another,
+            each correcting the previous one's errors; often the most accurate.</li>
+          <li><b class="term">SVM</b> (Support Vector Machine) — finds the boundary that best
+            separates the two classes; works well in high-dimensional spaces.</li>
+          <li><b class="term">KNN</b> (k-Nearest Neighbours) — classifies each student by the
+            majority label of the most similar students around it.</li>
+        </ul>
+      </details>
       <div class="card full">
         <h3 style="margin:6px 0">Model comparison — predicting financial stress</h3>
         <div class="tbl-wrap"><div id="modeltable"></div></div>
@@ -100,11 +148,23 @@
       <div class="card full">
         <h3 style="margin:6px 0">Statistical hypothesis testing</h3>
         <div class="tbl-wrap"><div id="hyptable"></div></div>
-        <div class="note" style="margin-top:12px">
-          All tests return <b>null</b> results — demographics do not drive spending in
-          this dataset, consistent with the near-zero raw correlations. Reporting null
-          results honestly is a valid statistical-inference finding.
-        </div>
+        <details class="explain" open>
+          <summary>ℹ️ What does “null” mean here?</summary>
+          <ul>
+            <li>Each test starts from a <b>null hypothesis</b> (H₀) of <i>“no effect / no
+              relationship.”</i> The <b class="term">p_value</b> is the probability of seeing
+              this result if H₀ were true.</li>
+            <li>If <code>p &lt; 0.05</code> → the effect is <b>significant</b> (we reject H₀).
+              If <code>p ≥ 0.05</code> → <b class="term">null (no effect)</b>: we cannot
+              conclude any real difference/relationship.</li>
+            <li>Example: <i>ANOVA monthly_expenses ~ major</i> is null → average spending does
+              <b>not</b> differ significantly between majors. <i>Chi-square</i> is
+              “independent” → payment method does not depend on major.</li>
+            <li><b>Why everything is null:</b> the dataset is synthetically generated, so the
+              variables are unrelated by design (max raw correlation ≈ 0.075). Reporting these
+              null results honestly is itself a valid statistical-inference finding.</li>
+          </ul>
+        </details>
       </div>
     </section>
   </main>
