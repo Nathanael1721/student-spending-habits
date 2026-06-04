@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Spending Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+</head>
+<body>
+<header>
+  <h1>💸 Student Spending Habits — Dashboard</h1>
+  <div class="sub" id="meta">Loading…</div>
+</header>
+
+<div class="layout">
+  <aside>
+    <h3>🔎 Filters</h3>
+    <div id="filters"></div>
+    <div class="note" id="filter-note"></div>
+    <div class="note">
+      Dataset is <b>synthetically generated</b> — raw features are statistically
+      independent. Segments &amp; models use engineered financial features.
+    </div>
+  </aside>
+
+  <main>
+    <div class="tabs" id="tabs"></div>
+
+    <!-- Overview -->
+    <section class="panel active" data-tab="overview">
+      <div class="kpis" id="kpis"></div>
+      <div class="card full">
+        <button class="btn" id="dl">⬇️ Download filtered data (CSV)</button>
+        <div class="tbl-wrap" style="margin-top:10px"><div id="table"></div></div>
+      </div>
+    </section>
+
+    <!-- Descriptive -->
+    <section class="panel" data-tab="descriptive">
+      <div class="grid">
+        <div class="card"><div id="c_gender" class="chart"></div></div>
+        <div class="card"><div id="c_year" class="chart"></div></div>
+        <div class="card"><div id="c_major" class="chart"></div></div>
+        <div class="card"><div id="c_pay" class="chart"></div></div>
+      </div>
+      <div class="card full"><div id="c_avgspend" class="chart"></div></div>
+      <div class="card full"><div id="c_savings" class="chart"></div></div>
+    </section>
+
+    <!-- Segments -->
+    <section class="panel" data-tab="segments">
+      <div class="grid">
+        <div class="card"><div id="c_segpie" class="chart"></div></div>
+        <div class="card"><div id="c_segscatter" class="chart"></div></div>
+      </div>
+      <div class="card full"><div id="c_pca" class="chart"></div></div>
+      <div class="card full">
+        <h3 style="margin:6px 0">Segment profile (means)</h3>
+        <div class="tbl-wrap"><div id="segtable"></div></div>
+      </div>
+    </section>
+
+    <!-- Prediction -->
+    <section class="panel" data-tab="prediction">
+      <div class="card full">
+        <h3 style="margin:6px 0">Model comparison — predicting financial stress</h3>
+        <div class="tbl-wrap"><div id="modeltable"></div></div>
+        <p class="sub" style="color:var(--muted);font-size:12px">
+          Computed on the full dataset (not affected by filters).</p>
+      </div>
+      <div class="grid">
+        <div class="card"><div id="c_roc" class="chart"></div></div>
+        <div class="card"><div id="c_imp" class="chart"></div></div>
+      </div>
+      <div class="card full"><div id="c_cm" class="chart"></div></div>
+    </section>
+
+    <!-- Financial -->
+    <section class="panel" data-tab="financial">
+      <div class="grid">
+        <div class="card"><div id="c_health" class="chart"></div></div>
+        <div class="card"><div id="c_503020" class="chart"></div></div>
+      </div>
+      <div class="card full"><div id="c_lorenz" class="chart"></div></div>
+      <div class="card full">
+        <h3 style="margin:6px 0">🔮 What-if policy simulation</h3>
+        <div class="slider-row">
+          <label>Increase monthly income: <b id="incVal">0%</b><br>
+            <input type="range" id="incPct" min="0" max="50" step="5" value="0"></label>
+          <label>Add monthly financial aid: <b id="aidVal">0</b><br>
+            <input type="range" id="aidAdd" min="0" max="500" step="50" value="0"></label>
+        </div>
+        <div class="kpis" id="whatif"></div>
+      </div>
+    </section>
+
+    <!-- Hypothesis -->
+    <section class="panel" data-tab="hypothesis">
+      <div class="card full">
+        <h3 style="margin:6px 0">Statistical hypothesis testing</h3>
+        <div class="tbl-wrap"><div id="hyptable"></div></div>
+        <div class="note" style="margin-top:12px">
+          All tests return <b>null</b> results — demographics do not drive spending in
+          this dataset, consistent with the near-zero raw correlations. Reporting null
+          results honestly is a valid statistical-inference finding.
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
