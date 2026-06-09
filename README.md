@@ -11,8 +11,7 @@ in an interactive web dashboard that runs entirely in the browser.
 
 ## 🔗 Live dashboard
 
-Deployed as a static site on **Vercel**: <https://student-spending-habits.vercel.app>
-*(replace with your actual Vercel URL if different).*
+🌐 **[https://student-spending-habits.vercel.app](https://student-spending-habits.vercel.app)** — deployed as a static site on Vercel (auto-redeploys on every push to `main`).
 
 ---
 
